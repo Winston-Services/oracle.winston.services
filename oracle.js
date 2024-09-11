@@ -72,7 +72,7 @@ async function getPairInterface(provider, factory, tokenA, tokenB) {
 }
 
 // setting up some address reference
-export let addressBook = {
+let addressBook = {
   Dead: {
     1: "0x000000000000000000000000000000000000dEaD", // eth
     56: "0x000000000000000000000000000000000000dEaD", // bsc
@@ -497,7 +497,7 @@ async function fetchPools(network = "Bsc", a = "Rickle", b = "Winston") {
   // if (network === "Arb") await sushiswapPools();
 }
 
-export async function main() {
+async function main() {
   for (let net of Networks) {
     // console.log(net, NetworkId(net));
     poolMaps.set(NetworkId(net), new Map());
@@ -597,3 +597,14 @@ export async function main() {
     })
   };
 }
+
+export {
+  createABIFromString,
+  NetworkId,
+  getPairInterface,
+  getNetworkRpcUrl,
+  getLiquidityBalances,
+  dataReponse,
+  addressBook,
+  main
+};
