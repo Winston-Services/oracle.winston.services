@@ -1,7 +1,7 @@
 // Import ethers from the CDN
 import { addressBook, main } from "https://oracle.winston.services/oracle.js";
 main();
-
+const responseData = await Winston.data;
 function setRickleTotalSupply() {
   const el = document.getElementById("");
 }
@@ -16,11 +16,11 @@ function setAhwaTotalSupply() {
 }
 function setRickleLockedSupply() {
   const el = document.getElementById("totalRKLLocked");
-  el.innerText = "0";
+  el.innerText = responseData.locked_in_winston.Rickle;
 }
 function setWinstonLockedSupply() {
   const el = document.getElementById("totalWINLocked");
-  el.innerText = "0";
+  el.innerText = responseData.locked_in_winston.Winston;
 }
 function setAcademyLockedSupply() {
   const el = document.getElementById("");
@@ -30,7 +30,7 @@ function setRickleBurnedSupply() {
 }
 function setWinstonBurnedSupply() {
   const el = document.getElementById("totalWINBurned");
-  el.innerText = "0";
+  el.innerText = responseData.burned_supply.Winston;
 }
 function setAcademyBurnedSupply() {
   const el = document.getElementById("");
