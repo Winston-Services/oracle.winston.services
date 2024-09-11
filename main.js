@@ -1,7 +1,7 @@
 // Import ethers from the CDN
 import { addressBook, main } from "https://oracle.winston.services/oracle.js";
 main();
-const responseData = await Winston.data;
+const responseData = await globalThis.Winston.data;
 console.log(responseData);
 function setRickleTotalSupply() {
   const el = document.getElementById("");
