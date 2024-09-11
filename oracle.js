@@ -534,7 +534,7 @@ async function main() {
   }
   // console.log(poolMaps);
   globalThis.Winston = {
-    data: dataReponse(poolMaps).then((r) => {
+    data: await dataReponse(poolMaps).then((r) => {
       let _r = { ...r };
       _r.burned_supply.Academy = ethers.formatUnits(
         _r.burned_supply.Academy,
