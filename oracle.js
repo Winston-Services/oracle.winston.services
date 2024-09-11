@@ -420,7 +420,7 @@ const provider = (net) =>
     : ethers.getDefaultProvider();
 
 async function fetchPools(network = "Bsc", a = "Rickle", b = "Winston") {
-  console.log("Network:%s\t %s:%s", network, a, b);
+  // console.log("Network:%s\t %s:%s", network, a, b);
   const uniswapPools = async () => {
     const pairAddress = await getPairInterface(
       provider(NetworkId(network)),
@@ -446,7 +446,7 @@ async function fetchPools(network = "Bsc", a = "Rickle", b = "Winston") {
       addressBook[b][NetworkId(network)]
     );
     if (pairAddress) {
-      console.log("Pool Address : ", pairAddress);
+      // console.log("Pool Address : ", pairAddress);
       addPool(
         NetworkId(network),
         pairAddress,
@@ -463,7 +463,7 @@ async function fetchPools(network = "Bsc", a = "Rickle", b = "Winston") {
       addressBook[b][NetworkId(network)]
     );
     if (pairAddress) {
-      console.log("Pool Address : ", pairAddress);
+      // console.log("Pool Address : ", pairAddress);
       addPool(
         NetworkId(network),
         pairAddress,
@@ -480,7 +480,7 @@ async function fetchPools(network = "Bsc", a = "Rickle", b = "Winston") {
       addressBook[b][NetworkId(network)]
     );
     if (pairAddress) {
-      console.log("Pool Address : ", pairAddress);
+      // console.log("Pool Address : ", pairAddress);
       addPool(
         NetworkId(network),
         pairAddress,
