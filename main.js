@@ -2,6 +2,7 @@
 import { addressBook, main } from "https://oracle.winston.services/oracle.js";
 main();
 const responseData = await Winston.data;
+console.log(responseData);
 function setRickleTotalSupply() {
   const el = document.getElementById("");
 }
