@@ -1,23 +1,44 @@
 // Import ethers from the CDN
 import { addressBook, main } from "https://oracle.winston.services/oracle.js";
 main();
-let assets = {
-  WETH: ["0x02aa", "0x82af"],
-  WBNB: [addressBook.BNB[56]],
-  WMATIC: ["0x0d50"],
-  BUSD: ["0xe9e7"],
-  BTCB: ["0x7130"],
-  WBTC: ["0x2f2a"],
-  USDT: ["0x55d3", "0xc213", "0xfd08"],
-  USDC: ["0x8ac7", "0x2791", "0xff97", "0xaf88"],
-  CAKE: ["0x0e09"]
-};
-let burnAddress = {
-  1: "0x000000000000000000000000000000000000dEaD",
-  56: "0x000000000000000000000000000000000000dEaD",
-  137: "0x000000000000000000000000000000000000dEaD",
-  42161: "0x000000000000000000000000000000000000dEaD"
-};
+
+function setRickleTotalSupply() {
+  const el = document.getElementById("");
+}
+function setWinstonTotalSupply() {
+  const el = document.getElementById("");
+}
+function setAcademyTotalSupply() {
+  const el = document.getElementById("");
+}
+function setAhwaTotalSupply() {
+  const el = document.getElementById("");
+}
+function setRickleLockedSupply() {
+  const el = document.getElementById("totalRKLLocked");
+  el.innerText = "0";
+}
+function setWinstonLockedSupply() {
+  const el = document.getElementById("totalWINLocked");
+  el.innerText = "0";
+}
+function setAcademyLockedSupply() {
+  const el = document.getElementById("");
+}
+function setRickleBurnedSupply() {
+  const el = document.getElementById("");
+}
+function setWinstonBurnedSupply() {
+  const el = document.getElementById("totalWINBurned");
+  el.innerText = "0";
+}
+function setAcademyBurnedSupply() {
+  const el = document.getElementById("");
+}
+setRickleLockedSupply();
+setWinstonLockedSupply();
+setWinstonBurnedSupply();
+
 let maticRickle = {
   baseToken: "0x9fdc23fe295104ac55fef09363c56451d0e37cfa",
   chainId: 137
@@ -78,6 +99,7 @@ function extractDataItem(item) {
     verified: item.verified
   };
 }
+
 function createCell(text, style) {
   let cellEl = document.createElement("td");
   cellEl.innerHTML = text;

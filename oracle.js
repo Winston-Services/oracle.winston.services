@@ -598,7 +598,7 @@ async function main() {
   };
 }
 
-module.exports = {
+export {
   createABIFromString,
   NetworkId,
   getPairInterface,
