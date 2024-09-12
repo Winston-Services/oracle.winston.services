@@ -461,7 +461,7 @@ async function dataReponse(poolMaps) {
 const provider = (net) =>
   net !== 1
     ? new ethers.JsonRpcProvider(getNetworkRpcUrl(net))
-    : new ethers.JsonRpcProvider("https://mainnet.infura.io/v3/");
+    : new ethers.getDefaultProvider("homestead");
 
 async function fetchPools(network = "Bsc", a = "Rickle", b = "Winston") {
   // console.log("Network:%s\t %s:%s", network, a, b);
