@@ -8,25 +8,6 @@ function createABIFromString(str) {
 
 const Networks = ["Eth", "Bsc", "Pol", "Arb"]; // , "Gno", "One"
 
-function NetworkId(name) {
-  switch (name) {
-    case "Eth":
-      return 1;
-    case "Bsc":
-      return 56;
-    case "Pol":
-      return 137;
-    case "Arb":
-      return 42161;
-    case "Gno":
-      return 100;
-    case "One":
-      return 1666600000;
-    default:
-      throw Error("Not Implemented.");
-  }
-}
-
 const ProjectAssets = ["Rickle", "Winston", "Academy", "Ahwa"];
 const StableAssets = ["BUSD", "USDT", "USDC"];
 const VolatileAssets = ["BTC", "BNB", "Pol", "Arb", "Weth"];
@@ -47,32 +28,6 @@ const StandardABIFunctions = {
     "function decimals() external view returns (uint8)"
   )
 };
-
-// Uniswap V2 factory contract ABI
-const UNISWAP_V2_FACTORY_ABI = [StandardABIFunctions.getPair];
-
-async function getPairInterface(provider, factory, tokenA, tokenB) {
-  // Initialize the factory contract
-  const factoryContract = new ethers.Contract(
-    factory,
-    UNISWAP_V2_FACTORY_ABI,
-    provider
-  );
-
-  try {
-    const pairAddress = await factoryContract.getPair(tokenA, tokenB);
-    if (pairAddress === ethers.ZeroAddress) {
-      console.log("No liquidity pool exists for this pair.");
-      return null;
-    } else {
-      console.log(`Liquidity pool address: ${pairAddress}`);
-      return pairAddress;
-    }
-  } catch (error) {
-    console.error("Error fetching liquidity pool address:", error);
-    return null;
-  }
-}
 
 // setting up some address reference
 let addressBook = {
@@ -170,6 +125,72 @@ let addressBook = {
   }
 };
 
+// Uniswap V2 factory contract ABI
+const UNISWAP_V2_FACTORY_ABI = [StandardABIFunctions.getPair];
+
+// id to name map
+function Network(networkId) {
+  switch (networkId) {
+    case 1:
+      return "Eth";
+    case 56:
+      return "Bsc";
+    case 137:
+      return "Pol";
+    case 42161:
+      return "Arb";
+    case 100:
+      return "Gno";
+    case 1666600000:
+      return "One";
+    default:
+      throw Error("Not Implemented.");
+  }
+}
+
+// name to id map
+function NetworkId(name) {
+  switch (name) {
+    case "Eth":
+      return 1;
+    case "Bsc":
+      return 56;
+    case "Pol":
+      return 137;
+    case "Arb":
+      return 42161;
+    case "Gno":
+      return 100;
+    case "One":
+      return 1666600000;
+    default:
+      throw Error("Not Implemented.");
+  }
+}
+
+async function getPairInterface(provider, factory, tokenA, tokenB) {
+  // Initialize the factory contract
+  const factoryContract = new ethers.Contract(
+    factory,
+    UNISWAP_V2_FACTORY_ABI,
+    provider
+  );
+
+  try {
+    const pairAddress = await factoryContract.getPair(tokenA, tokenB);
+    if (pairAddress === ethers.ZeroAddress) {
+      console.log("No liquidity pool exists for this pair.");
+      return null;
+    } else {
+      console.log(`Liquidity pool address: ${pairAddress}`);
+      return pairAddress;
+    }
+  } catch (error) {
+    console.error("Error fetching liquidity pool address:", error);
+    return null;
+  }
+}
+
 async function getBalance(token, holder, provider) {
   let contract = new ethers.Contract(
     token,
@@ -187,7 +208,6 @@ async function getDecimals(token, networkId) {
   );
   return await contract.decimals();
 }
-
 // Get a pair balance.
 async function getPairBalance(
   networkId = 1,
@@ -435,7 +455,7 @@ async function dataReponse(poolMaps) {
 const provider = (net) =>
   net !== 1
     ? new ethers.JsonRpcProvider(getNetworkRpcUrl(net))
-    : ethers.getDefaultProvider();
+    : new ethers.JsonRpcProvider("https://mainnet.infura.io/v3/");
 
 async function fetchPools(network = "Bsc", a = "Rickle", b = "Winston") {
   // console.log("Network:%s\t %s:%s", network, a, b);
@@ -623,6 +643,20 @@ async function main() {
             Number(_r.locked_in_winston.Winston))
       );
       _r.t_cir_supply.Ahwa = _r.total_supply.Ahwa;
+
+      // Not a complete calculation.
+      _r.t_cir_supply.Rickle[1] = String(
+        Number(_r.total_supply.Rickle[1]) -
+          Number(_r.burned_supply.Rickle[1]) -
+          total
+      );
+      for (let net of [56, 137, 42161]) {
+        _r.t_cir_supply.Rickle[net] = String(
+          Number(_r.total_supply.Rickle[net]) -
+            (Number(_r.burned_supply.Rickle[net]) +
+              Number(_r.locked_in_winston.Rickle[net]))
+        );
+      }
       // console.log("On Other Chains.", total);
       // console.log(_r.liquidity);
       return _r;
@@ -632,6 +666,7 @@ async function main() {
 
 export {
   createABIFromString,
+  Network,
   NetworkId,
   getPairInterface,
   getNetworkRpcUrl,
