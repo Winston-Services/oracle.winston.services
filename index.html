@@ -238,6 +238,7 @@
                   );
 
                   for (const [token, networks] of Object.entries(addressBook)) {
+                    if (token === "Dead") continue;
                     for (const [networkId, address] of Object.entries(
                       networks
                     )) {
