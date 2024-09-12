@@ -122,6 +122,12 @@ let addressBook = {
     56: "0xca143ce32fe78f1f7019d7d551a6402fc5350c73",
     137: "0xc35DADB65012eC5796536bD986B6e95e7E537097",
     42161: "0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32"
+  },
+  APESWAP_V2_FACTORY_ADDRESS: {
+    56: "0x084b1c3C81545d370f3634392De611CaaBFf8148"
+  },
+  "1INCH_V2_FACTORY_ADDRESS": {
+    56: "0x1111111254EEB25477B68fb85Ed929f73A960582"
   }
 };
 
@@ -179,14 +185,14 @@ async function getPairInterface(provider, factory, tokenA, tokenB) {
   try {
     const pairAddress = await factoryContract.getPair(tokenA, tokenB);
     if (pairAddress === ethers.ZeroAddress) {
-      console.log("No liquidity pool exists for this pair.");
+      // console.log("No liquidity pool exists for this pair.");
       return null;
     } else {
-      console.log(`Liquidity pool address: ${pairAddress}`);
+      // console.log(`Liquidity pool address: ${pairAddress}`);
       return pairAddress;
     }
   } catch (error) {
-    console.error("Error fetching liquidity pool address:", error);
+    // console.error("Error fetching liquidity pool address:", error);
     return null;
   }
 }
@@ -527,10 +533,49 @@ async function fetchPools(network = "Bsc", a = "Rickle", b = "Winston") {
       );
     }
   };
+  const apeswapPools = async () => {
+    const pairAddress = await getPairInterface(
+      provider(NetworkId(network)),
+      addressBook.APESWAP_V2_FACTORY_ADDRESS[NetworkId(network)],
+      addressBook[a][NetworkId(network)],
+      addressBook[b][NetworkId(network)]
+    );
+    if (pairAddress) {
+      // console.log("Pool Address : ", pairAddress);
+      addPool(
+        NetworkId(network),
+        pairAddress,
+        addressBook[a][NetworkId(network)],
+        addressBook[b][NetworkId(network)]
+      );
+    }
+  };
+
+  const oneinchPools = async () => {
+    const pairAddress = await getPairInterface(
+      provider(NetworkId(network)),
+      addressBook["1INCH_V2_FACTORY_ADDRESS"][NetworkId(network)],
+      addressBook[a][NetworkId(network)],
+      addressBook[b][NetworkId(network)]
+    );
+    if (pairAddress) {
+      // console.log("Pool Address : ", pairAddress);
+      addPool(
+        NetworkId(network),
+        pairAddress,
+        addressBook[a][NetworkId(network)],
+        addressBook[b][NetworkId(network)]
+      );
+    }
+  };
+
   if (network === "Eth") await uniswapPools();
   if (network === "Bsc") await pancakePools();
-  // if (network === "Pol") await quickPools();
+  if (network === "Bsc") await apeswapPools();
   if (network === "Bsc") await sushiswapPools();
+  if (network === "Bsc") await oneinchPools();
+
+  // if (network === "Pol") await quickPools();
   // if (network === "Pol") await sushiswapPools();
   // if (network === "Arb") await sushiswapPools();
 }

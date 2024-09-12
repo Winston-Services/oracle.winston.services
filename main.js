@@ -347,33 +347,32 @@ for (let item = 0; item < data.length; item++) {
     if (number_of_pairs.indexOf(token0_address) === -1) {
       number_of_pairs.push(token0_address);
     }
+    // ToDo::use the standard instead
     let chains = {
       1: "ETH",
       56: "BSC",
       137: "POLY",
-      42161: "ARB"
+      42161: "ARB",
+      100: "GNO",
+      1666600000: "ONE"
     };
     let chainStyle = {
       1: { backgroundColor: "#000123", color: "#fff" },
       56: { backgroundColor: "#000321", color: "#fff" },
       137: { backgroundColor: "#000444", color: "#fff" },
-      42161: { backgroundColor: "#000555", color: "#fff" }
+      42161: { backgroundColor: "#000555", color: "#fff" },
+      100: { backgroundColor: "#000666", color: "#fff" },
+      1666600000: { backgroundColor: "#000777", color: "#fff" }
+      // gno one
     };
     let rowEl = document.createElement("tr");
     switch (chains[chainId]) {
       case "ETH":
-        rowEl.style.backgroundColor = chainStyle[chainId].backgroundColor;
-        rowEl.style.color = chainStyle[chainId].color;
-        break;
       case "BSC":
-        rowEl.style.backgroundColor = chainStyle[chainId].backgroundColor;
-        rowEl.style.color = chainStyle[chainId].color;
-        break;
       case "POLY":
-        rowEl.style.backgroundColor = chainStyle[chainId].backgroundColor;
-        rowEl.style.color = chainStyle[chainId].color;
-        break;
       case "ARB":
+      case "GNO":
+      case "ONE":
         rowEl.style.backgroundColor = chainStyle[chainId].backgroundColor;
         rowEl.style.color = chainStyle[chainId].color;
         break;
