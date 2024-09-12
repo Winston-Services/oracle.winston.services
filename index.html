@@ -218,7 +218,69 @@
             </table>
           </div>
         </div>
+        <div class="addressBookSection">
+          <h3>Address Book</h3>
+          <div class="tableContainer">
+            <table id="addressBookTable">
+              <thead>
+                <tr class="tableRowHeader">
+                  <th>Network</th>
+                  <th>Token</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                <script type="module">
+                  import { addressBook } from "https://oracle.winston.services/oracle.js";
 
+                  const tableBody = document.querySelector(
+                    "#addressBookTable tbody"
+                  );
+
+                  for (const [token, networks] of Object.entries(addressBook)) {
+                    for (const [networkId, address] of Object.entries(
+                      networks
+                    )) {
+                      const row = document.createElement("tr");
+                      const networkCell = document.createElement("td");
+                      const tokenCell = document.createElement("td");
+                      const addressCell = document.createElement("td");
+
+                      networkCell.textContent = networkId;
+                      tokenCell.textContent = token;
+                      addressCell.textContent = address;
+
+                      row.appendChild(networkCell);
+                      row.appendChild(tokenCell);
+                      row.appendChild(addressCell);
+
+                      tableBody.appendChild(row);
+                    }
+                  }
+                </script>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <style>
+          .tableContainer {
+            max-height: 150px; /* Adjust the height as needed */
+            overflow-y: auto;
+          }
+          .addressBookSection table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          .addressBookSection th,
+          .addressBookSection td {
+            border: 1px solid #ddd;
+            padding: 8px;
+          }
+          .addressBookSection th {
+            background-color: #f2f2f2;
+            text-align: left;
+          }
+        </style>
         <style>
           .container {
             display: flex;
