@@ -42,6 +42,9 @@ const StandardABIFunctions = {
   ),
   getPair: createABIFromString(
     "function getPair(address tokenA, address tokenB) external view returns (address pair)"
+  ),
+  decimals: createABIFromString(
+    "function decimals() external view returns (uint8)"
   )
 };
 
@@ -176,18 +179,33 @@ async function getBalance(token, holder, provider) {
   return await contract.balanceOf(holder);
 }
 
+async function getDecimals(token, networkId) {
+  let contract = new ethers.Contract(
+    token,
+    [StandardABIFunctions.decimals],
+    provider(networkId)
+  );
+  return await contract.decimals();
+}
+
 // Get a pair balance.
 async function getPairBalance(
+  networkId = 1,
   poolAddress = "0x",
   a = "0x",
-  b = "0x",
-  provider
+  b = "0x"
 ) {
   return {
-    [poolAddress]: {
-      [a]: await getBalance(a, poolAddress, provider),
-      [b]: await getBalance(b, poolAddress, provider)
-    }
+    networkId,
+    poolAddress,
+    [a]: [
+      await getBalance(a, poolAddress, provider(networkId)),
+      await getDecimals(a, networkId)
+    ],
+    [b]: [
+      await getBalance(b, poolAddress, provider(networkId)),
+      await getDecimals(b, networkId)
+    ]
   };
 }
 
@@ -268,7 +286,7 @@ async function getLiquidityBalances(poolMaps) {
     for (let poolIndex = 0; poolIndex < poolAddresses.length - 1; poolIndex++) {
       const poolAddress = poolAddresses[poolIndex];
       const [a, b] = pools.get(poolAddress);
-      data.push(await getPairBalance(poolAddress, a, b, provider(net)));
+      data.push(await getPairBalance(net, poolAddress, a, b));
     }
   }
   return await Promise.all(data);
