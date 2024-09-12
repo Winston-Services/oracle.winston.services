@@ -32,10 +32,10 @@ function setAcademyLockedSupply() {
 function setRickleBurnedSupply() {
   const el = document.getElementById("totalRKLBurned");
   el.innerText = String(
-    responseData.burned_supply.Rickle[1] +
-      responseData.burned_supply.Rickle[56] +
-      responseData.burned_supply.Rickle[42161] +
-      responseData.burned_supply.Rickle[137]
+    Number(responseData.burned_supply.Rickle[1]) +
+      Number(responseData.burned_supply.Rickle[56]) +
+      Number(responseData.burned_supply.Rickle[42161]) +
+      Number(responseData.burned_supply.Rickle[137])
   );
 }
 
