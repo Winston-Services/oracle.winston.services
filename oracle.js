@@ -700,9 +700,8 @@ async function main() {
       );
       for (let net of [56, 137, 42161]) {
         _r.t_cir_supply.Rickle[net] = String(
-          Number(_r.total_supply.Rickle[net]) -
-            (Number(_r.burned_supply.Rickle[net]) +
-              Number(_r.locked_in_winston.Rickle[net]))
+          _r.total_supply.Rickle[net] -
+            (_r.burned_supply.Rickle[net] + _r.locked_in_winston.Rickle[net])
         );
       }
       // console.log("On Other Chains.", total);
