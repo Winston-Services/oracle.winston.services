@@ -535,6 +535,7 @@ async function main() {
   // console.log(poolMaps);
   globalThis.Winston = {
     data: await dataReponse(poolMaps).then((r) => {
+      // This function updates and calculates the totals.
       let _r = { ...r };
       _r.burned_supply.Academy = ethers.formatUnits(
         _r.burned_supply.Academy,
@@ -591,6 +592,15 @@ async function main() {
         );
       }
       _r.cir_supply.Rickle[1] = String(_r.cir_supply.Rickle[1] - total);
+
+      _r.t_cir_supply.Ahwa = _r.total_supply.Ahwa;
+      _r.t_cir_supply.Academy =
+        _r.total_supply.Academy -
+        (_r.burned_supply.Academy + _r.locked_in_winston.Academy);
+      _r.t_cir_supply.Winston =
+        _r.total_supply.Winston -
+        (_r.burned_supply.Academy + _r.locked_in_winston.Academy);
+      _r.t_cir_supply.Ahwa = _r.total_supply.Ahwa;
       // console.log("On Other Chains.", total);
       // console.log(_r.liquidity);
       return _r;

@@ -2,7 +2,7 @@
 import { addressBook, main } from "https://oracle.winston.services/oracle.js";
 await main();
 const responseData = globalThis.Winston.data;
-console.log(responseData);
+console.log(responseData, addressBook);
 function setRickleTotalSupply() {
   const el = document.getElementById("");
 }
@@ -19,23 +19,36 @@ function setRickleLockedSupply() {
   const el = document.getElementById("totalRKLLocked");
   el.innerText = responseData.locked_in_winston.Rickle;
 }
+
 function setWinstonLockedSupply() {
   const el = document.getElementById("totalWINLocked");
   el.innerText = responseData.locked_in_winston.Winston;
 }
+
 function setAcademyLockedSupply() {
   const el = document.getElementById("");
 }
+
 function setRickleBurnedSupply() {
-  const el = document.getElementById("");
+  const el = document.getElementById("totalRKLlBurned");
+  el.innerText = String(
+    responseData.burned_supply.Rickle[1] +
+      responseData.burned_supply.Rickle[56] +
+      responseData.burned_supply.Rickle[42161] +
+      responseData.burned_supply.Rickle[137]
+  );
 }
+
 function setWinstonBurnedSupply() {
   const el = document.getElementById("totalWINBurned");
   el.innerText = responseData.burned_supply.Winston;
 }
+
 function setAcademyBurnedSupply() {
   const el = document.getElementById("");
 }
+
+setRickleBurnedSupply();
 setRickleLockedSupply();
 setWinstonLockedSupply();
 setWinstonBurnedSupply();
