@@ -705,10 +705,11 @@ async function main() {
         );
       }
 
-      _r.t_cir_supply.Rickle[56] = String(
-        _r.total_supply.Rickle[56] -
-          (_r.burned_supply.Rickle[56] + _r.locked_in_winston.Rickle)
-      );
+      _r.t_cir_supply.Rickle[56] = [
+        _r.total_supply.Rickle[56],
+        _r.burned_supply.Rickle[56],
+        _r.locked_in_winston.Rickle
+      ];
 
       // console.log("On Other Chains.", total);
       // console.log(_r.liquidity);
