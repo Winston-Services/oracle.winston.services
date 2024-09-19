@@ -62,6 +62,7 @@ let arbRickle = {
   baseToken: "0x2d0e0ec9c82c67c4a8d7c7e6c176831f52821b33",
   chainId: 42161
 };
+
 let bscRickle = {
   baseToken: "0xeCa15e1BbFF172D545Dd6325F3Bae7b737906737",
   chainId: 56
@@ -195,6 +196,7 @@ async function getData() {
   );
   return data;
 }
+
 let data = await getData();
 data = data.sort(function (a, b) {
   return b.baseTokenLiquidity - a.baseTokenLiquidity;
@@ -227,6 +229,9 @@ let totalWBTCInLiquidity = data
   )
   .reduce((p, v) => p + v.targetTokenLiquidity, 0);
 
+
+
+
 let totalWETHInLiquidity = data
   .filter(
     (x) =>
@@ -248,7 +253,9 @@ let totalUSDCInLiquidity = data
     (x) =>
       x.target.address.startsWith("0x8ac7") ||
       x.target.address.startsWith("0x2791") ||
-      x.target.address.startsWith("0xaf88")
+      x.target.address.startsWith("0xaf88") ||
+      x.target.address.startsWith("0x3c499") ||
+      x.target.address.startsWith("0xff970")
   )
   .reduce((p, v) => p + v.targetTokenLiquidity, 0);
 
@@ -256,7 +263,8 @@ let totalUSDTInLiquidity = data
   .filter(
     (x) =>
       x.target.address.startsWith("0x55d3") ||
-      x.target.address.startsWith("0xc213")
+      x.target.address.startsWith("0xc213") ||
+      x.target.address.startsWith("0xfd08")
   )
   .reduce((p, v) => p + v.targetTokenLiquidity, 0);
 
